@@ -1,9 +1,10 @@
-USE parchandposey;
-DROP TABLE orders;
-DROP TABLE web_events;
-DROP TABLE accounts;
-DROP TABLE sales_reps;
-DROP TABLE region;
+--USE parchandposey;
+
+-- DROP TABLE orders;
+-- DROP TABLE web_events;
+-- DROP TABLE accounts;
+-- DROP TABLE sales_reps;
+-- DROP TABLE region;
 
 START TRANSACTION; 
 
@@ -13,8 +14,8 @@ CREATE TABLE region (
 	name CHAR(25),
     PRIMARY KEY (region_id)
 );
--- ---------------------------
 
+-- ---------------------------
 CREATE TABLE sales_reps (
 	sales_rep_id INTEGER,
 	name CHAR(25),
@@ -22,43 +23,41 @@ CREATE TABLE sales_reps (
     PRIMARY KEY (sales_rep_id)
 );
 
--- ------------------------------------
 
+-- ------------------------------------
 CREATE TABLE accounts (
-	account_id integer,
-	name char(50),
-	website VARchar(50),
-	lat numeric(11,8),
-	`long` numeric(11,8),
-	primary_poc char(25),
-	sales_rep_id integer,
+	account_id INTEGER,
+	name CHAR(50),
+	website VARCHAR(50),
+	lat NUMERIC(11,8),
+	long NUMERIC(11,8),
+	primary_poc CHAR(25),
+	sales_rep_id INTEGER,
     PRIMARY KEY (account_id)
 );
--- ------------------------
 
 -- ------------------------
-
 CREATE TABLE web_events (
 	id INTEGER,
 	account_id INTEGER,
 	occurred_at TIMESTAMP,
-	`channel` CHAR(25),
+	channel CHAR(25),
     PRIMARY KEY (id)
 );
 
 -- ----------------------------
 CREATE TABLE orders (
-	order_id integer,
-	account_id integer,
+	order_id INTEGER,
+	account_id INTEGER,
 	occurred_at TIMESTAMP,
-	standard_qty integer,
-	gloss_qty integer,
-	poster_qty integer,
-	total integer,
-	standard_amt_usd numeric(10,2),
-	gloss_amt_usd numeric(10,2),
-	poster_amt_usd numeric(10,2),
-	total_amt_usd numeric(10,2),
+	standard_qty INTEGER,
+	gloss_qty INTEGER,
+	poster_qty INTEGER,
+	total INTEGER,
+	standard_amt_usd NUMERIC(10,2),
+	gloss_amt_usd NUMERIC(10,2),
+	poster_amt_usd NUMERIC(10,2),
+	total_amt_usd NUMERIC(10,2),
     PRIMARY KEY (order_id)
 );
 
@@ -66,6 +65,7 @@ ALTER TABLE sales_reps ADD CONSTRAINT constFKPK1 FOREIGN KEY (region_id) REFEREN
 ALTER TABLE accounts ADD CONSTRAINT constFKPK2 FOREIGN KEY (sales_rep_id) REFERENCES sales_reps (sales_rep_id);
 ALTER TABLE web_events ADD CONSTRAINT constFKPK3 FOREIGN KEY (account_id) REFERENCES accounts (account_id);
 ALTER TABLE orders ADD CONSTRAINT constFKPK4 FOREIGN KEY (account_id) REFERENCES accounts (account_id);
+
 -- --------------------------
 
 INSERT INTO region VALUES (1,'Northeast');
